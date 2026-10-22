@@ -1,0 +1,12 @@
+# ==================================================
+# HORUS — Finales de línea
+# ==================================================
+# Normaliza los archivos de texto a LF (Unix) en el
+# repositorio y en la copia de trabajo, para que el
+# proyecto sea idéntico en Windows, Linux y Docker.
+
+* text=auto eol=lf
+
+# Los scripts de Windows necesitan CRLF.
+*.cmd text eol=crlf
+*.bat text eol=crlf

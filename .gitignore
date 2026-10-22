@@ -1,0 +1,41 @@
+# ==================================================
+# HORUS — Archivos excluidos del control de versiones
+# ==================================================
+
+# --- Compilación (Maven) ---
+target/
+*.class
+*.jar
+.mvn/wrapper/maven-wrapper.jar
+
+# --- Credenciales y secretos ---
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# --- Entornos de IDE ---
+.idea/
+.vscode/
+*.iml
+*.iws
+.settings/
+.classpath
+.project
+
+# --- Sistema operativo ---
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# --- Logs y temporales ---
+*.log
+logs/
+
+# --- Archivos locales de trabajo (no se versionan) ---
+# Siguen funcionando igual: OpenCode los carga desde el disco.
+AGENTS.md
+MEMORY.md
+.opencode/
+
