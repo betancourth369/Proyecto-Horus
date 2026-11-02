@@ -1,6 +1,6 @@
 package com.project.back_horus.controller;
 
-import com.project.back_horus.entity.Task;
+import com.project.back_horus.dto.TaskDTO;
 import com.project.back_horus.service.TaskService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,14 +16,12 @@ public class TaskController {
     private final TaskService taskService;
 
     @GetMapping
-    public ResponseEntity<List<Task>> obtenerTareas(){
-        return  ResponseEntity.ok(taskService.obtenerTareas());
+    public ResponseEntity<List<TaskDTO>> obtenerTareas() {
+        return ResponseEntity.ok(taskService.obtenerTareas());
     }
 
     @PostMapping
-    public ResponseEntity<Task> crearTarea(@RequestBody Task task){
-        return ResponseEntity.status(201).body(taskService.crearTarea(task));
+    public ResponseEntity<TaskDTO> crearTarea(@RequestBody TaskDTO taskDTO) {
+        return ResponseEntity.status(201).body(taskService.crearTarea(taskDTO));
     }
-
 }
-
