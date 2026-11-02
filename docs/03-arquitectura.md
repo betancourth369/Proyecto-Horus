@@ -4,32 +4,48 @@
 
 - Un único módulo: `back_horus/`.
 - Una clase principal: `BackHorusApplication`.
-- Sin entidades, repositorios, servicios ni controladores implementados.
-- Los paquetes por capas **existen, pero están vacíos**.
+- Primera funcionalidad implementada: gestión de tareas (`Task`).
+- Paquetes por capas poblados: `controller`, `entity`, `repository`, `service`,
+  más `dto` para el contrato de la API.
 
 ### Estructura de carpetas (actual)
 
 ```
 back_horus/
 └── src/
-    ├── main/
-    │   ├── java/com/project/back_horus/
-    │   │   ├── BackHorusApplication.java
-    │   │   ├── controller/      (vacío)
-    │   │   ├── entity/          (vacío)
-    │   │   ├── repository/      (vacío)
-    │   │   └── service/         (vacío)
-    │   └── resources/
-    │       ├── application.properties
-    │       ├── static/          (vacío)
-    │       └── templates/       (vacío)
+    └── main/
+        └── java/com/project/back_horus/
+            ├── BackHorusApplication.java
+            ├── controller/
+            │   └── TaskController.java
+            ├── dto/
+            │   └── TaskDTO.java
+            ├── entity/
+            │   └── Task.java
+            ├── repository/
+            │   └── TaskRepository.java
+            └── service/
+                └── TaskService.java
     └── test/
         └── java/com/project/back_horus/
             └── BackHorusApplicationTests.java
 ```
 
-> Git no registra directorios vacíos: esos paquetes no aparecerán en el
-> repositorio hasta que contengan al menos un archivo.
+### Capas implementadas
+
+| Capa | Clase | Responsabilidad |
+|---|---|---|
+| Controller | `TaskController` | Recibe HTTP, devuelve JSON con códigos de estado |
+| Service | `TaskService` | Lógica de negocio y conversión DTO ↔ Entidad |
+| Repository | `TaskRepository` | Lectura y escritura en PostgreSQL (`JpaRepository`) |
+| Entity | `Task` | Tabla `tasks` en la base de datos |
+| DTO | `TaskDTO` | Contrato de la API: qué entra y qué sale |
+
+### Flujo verificado
+
+```
+POST /api/tasks → Controller → Service → Repository → PostgreSQL → Service → Controller → JSON
+```
 
 ## Arquitectura prevista (no implementada)
 
@@ -40,10 +56,11 @@ back_horus/
 
 ## Pendiente
 
-- Definir los módulos del monolito.
-- Poblar las capas con la primera funcionalidad.
+- Completar el CRUD de tareas: `GET /api/tasks/{id}`, `PUT /api/tasks/{id}`,
+  `DELETE /api/tasks/{id}`.
+- Definir módulos adicionales del monolito cuando surjan nuevas funcionalidades.
 
 ## Estado
 
-- Documento de arquitectura. Lo previsto no está implementado.
-- Última actualización: 2026-10-21.
+- Documento de arquitectura actualizado con la primera funcionalidad implementada.
+- Última actualización: 2026-11-03.
