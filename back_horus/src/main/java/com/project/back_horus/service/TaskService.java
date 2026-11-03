@@ -16,39 +16,28 @@ public class TaskService {
 
     private final TaskRepository taskRepository;
 
-    // ================================================================
-    // LISTAR TODAS (ya existía)
-    // ================================================================
-    public List<TaskDTO> obtenerTareas() {
-        return taskRepository.findAll().stream()
-                .map(this::toDTO)
-                .collect(Collectors.toList());
-    }
+    // ========= METODOS ==============================================
 
-    // ================================================================
-    // CREAR (ya existía)
-    // ================================================================
     public TaskDTO crearTarea(TaskDTO taskDTO) {
         Task task = toEntity(taskDTO);
         Task saved = taskRepository.save(task);
         return toDTO(saved);
     }
 
-    // ================================================================
-    // OBTENER POR ID (ya existía)
-    // ================================================================
+
+    public List<TaskDTO> obtenerTareas() {
+        return taskRepository.findAll().stream()
+                .map(this::toDTO)
+                .collect(Collectors.toList());
+    }
+
+
     public Optional<TaskDTO> obtenerTareaPorId(Long id) {
         return taskRepository.findById(id)
                 .map(this::toDTO);
     }
 
-    // ================================================================
-    // NUEVO: ACTUALIZAR POR ID
-    // Busca la tarea por id en la base de datos.
-    // Si existe, actualiza su título y estado de completada,
-    // guarda los cambios y devuelve el DTO actualizado envuelto en Optional.
-    // Si no existe, devuelve Optional.empty().
-    // ================================================================
+
     public Optional<TaskDTO> actualizarTarea(Long id, TaskDTO taskDTO) {
         return taskRepository.findById(id)                      // 1. Buscar la tarea existente
                 .map(existing -> {                              // 2. Si existe...
@@ -59,12 +48,7 @@ public class TaskService {
                 });
     }
 
-    // ================================================================
-    // NUEVO: BORRAR POR ID
-    // Verifica si existe la tarea con ese id.
-    // Si existe, la borra de la base de datos y devuelve true.
-    // Si no existe, devuelve false.
-    // ================================================================
+
     public boolean eliminarTarea(Long id) {
         if (taskRepository.existsById(id)) {    // 1. Verificar que existe
             taskRepository.deleteById(id);      // 2. Borrar de la base de datos
@@ -72,10 +56,11 @@ public class TaskService {
         }
         return false;                           // 4. Devolver false si no existía
     }
+    //*******************************************************************************
 
-    // ================================================================
-    // CONVERSORES (ya existían)
-    // ================================================================
+    // ================ METODOS CONVERSORES =========================================
+
+    //Entidad → DTO siempre que voy a devolver algo al cliente.
     private TaskDTO toDTO(Task task) {
         TaskDTO dto = new TaskDTO();
         dto.setId(task.getId());
@@ -85,6 +70,7 @@ public class TaskService {
         return dto;
     }
 
+    //DTO → Entidad solo cuando creo algo nuevo (POST).
     private Task toEntity(TaskDTO taskDTO) {
         Task task = new Task();
         task.setTitle(taskDTO.getTitle());
