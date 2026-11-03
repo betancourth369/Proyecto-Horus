@@ -45,6 +45,9 @@ back_horus/
 
 ```
 POST /api/tasks → Controller → Service → Repository → PostgreSQL → Service → Controller → JSON
+GET  /api/tasks/{id} → Controller → Service → Repository → PostgreSQL → Service → Controller → JSON
+PUT  /api/tasks/{id} → Controller → Service → Repository → PostgreSQL → Service → Controller → JSON
+DELETE /api/tasks/{id} → Controller → Service → Repository → PostgreSQL → Service → Controller → JSON
 ```
 
 ## Arquitectura prevista (no implementada)
@@ -56,11 +59,12 @@ POST /api/tasks → Controller → Service → Repository → PostgreSQL → Ser
 
 ## Pendiente
 
-- Completar el CRUD de tareas: `GET /api/tasks/{id}`, `PUT /api/tasks/{id}`,
-  `DELETE /api/tasks/{id}`.
+- Decidir si se añade validación de entrada en `TaskDTO` (por ejemplo, `@NotBlank`
+  en `title`) antes de exponer más endpoints.
+- Empezar la entidad de la lista de la compra (`ShoppingItem`).
 - Definir módulos adicionales del monolito cuando surjan nuevas funcionalidades.
 
 ## Estado
 
-- Documento de arquitectura actualizado con la primera funcionalidad implementada.
+- Documento de arquitectura actualizado con el CRUD completo de tareas.
 - Última actualización: 2026-11-03.
