@@ -23,15 +23,17 @@
 
 ## 📍 Estado
 
-> **En desarrollo activo.** El stack se está ampliando: Angular, Docker,
-> servicios de IA y domótica están **previstos, no implementados**. Hoy solo
-> existe la base del backend.
+> **En desarrollo activo.** El backend está operativo con la primera funcionalidad
+> completa (gestión de tareas). Angular, Docker, servicios de IA y domótica
+> están **previstos, no implementados**.
 
 | Componente | Estado |
 |---|---|
 | Backend Spring Boot + JPA + PostgreSQL | ✅ Arranca, conecta y sirve en `:8080` |
-| Capas `controller` · `entity` · `repository` · `service` | 📦 Paquetes creados, aún vacíos |
-| Endpoints REST | ⏳ Pendiente |
+| Capas `controller` · `entity` · `repository` · `service` · `dto` · `exception` | ✅ Implementadas |
+| Endpoints REST (`/api/tasks`) | ✅ CRUD completo: `GET`, `POST`, `GET/{id}`, `PUT/{id}`, `DELETE/{id}` |
+| Validación de entrada con `@Valid` y `@NotBlank` | ✅ Implementada (`400 Bad Request` con detalle) |
+| Manejo global de excepciones (`GlobalExceptionHandler`) | ✅ Implementado |
 | Tests | ⏳ Solo el test de contexto |
 | Frontend Angular | ⏳ Fase posterior |
 | Docker / IA / domótica | ⏳ Previsto |
@@ -46,6 +48,7 @@
 | Persistencia | Spring Data JPA · Hibernate 7.4.5.Final |
 | Servidor | Tomcat 11.0.24 *(embebido)* |
 | Base de datos | PostgreSQL 18.6 *(local)* |
+| Validación | Jakarta Bean Validation (`spring-boot-starter-validation`) |
 | IDE | IntelliJ IDEA |
 
 ## 📁 Estructura
@@ -53,6 +56,13 @@
 ```
 Project Horus/
 ├── back_horus/   Backend · Java + Spring Boot + PostgreSQL
+│   ├── controller/   Controladores REST (@RestController)
+│   ├── dto/          Objetos de transferencia de datos (@Data)
+│   ├── entity/       Entidades JPA (@Entity)
+│   ├── repository/   Repositorios Spring Data JPA
+│   ├── service/      Lógica de negocio y conversión DTO ↔ Entity
+│   ├── exception/    Manejo global de excepciones (@RestControllerAdvice)
+│   └── ...
 ├── docs/         Documentación técnica (libro del proyecto)
 └── README.md
 ```
@@ -75,8 +85,11 @@ aprendizaje del proyecto.
 
 - [x] Base del backend y conexión a base de datos
 - [x] Credenciales fuera del código
-- [ ] Primera funcionalidad completa: *entidad → repositorio → servicio → controlador*
+- [x] Primera funcionalidad completa: *entidad → repositorio → servicio → controlador* (tareas)
+- [x] Validación de entrada con DTO y `GlobalExceptionHandler`
+- [ ] Segunda funcionalidad: lista de la compra (`ShoppingItem`)
 - [ ] Tests unitarios y de integración
+- [ ] Consulta de clima mediante API externa
 - [ ] Frontend Angular
 - [ ] Docker Compose
 - [ ] Coordinación de servicios de IA
