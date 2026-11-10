@@ -19,35 +19,34 @@ public class TaskService {
     // ========= METODOS ==============================================
 
     public TaskDTO crearTarea(TaskDTO taskDTO) {
+        // 1. Convertir DTO -> Entidad (sin id ni fechaCreacion, los pone la BD)
         Task task = toEntity(taskDTO);
+        // 2. Guardar en base de datos y obtener la entidad con id asignado
         Task saved = taskRepository.save(task);
+        // 3. Convertir entidad guardada -> DTO para devolver al cliente
         return toDTO(saved);
     }
 
-
     public List<TaskDTO> obtenerTareas() {
-        return taskRepository.findAll().stream()
-                .map(this::toDTO)
-                .collect(Collectors.toList());
+        return taskRepository.findAll().stream()   // 1. Obtener todas las entidades de la BD
+                .map(this::toDTO)                  // 2. Convertir cada entidad a DTO
+                .collect(Collectors.toList());     // 3. Recolectar en lista y devolver
     }
-
 
     public Optional<TaskDTO> obtenerTareaPorId(Long id) {
-        return taskRepository.findById(id)
-                .map(this::toDTO);
+        return taskRepository.findById(id)   // 1. Buscar entidad por id en la BD
+                .map(this::toDTO);           // 2. Si existe, convertir a DTO
     }
-
 
     public Optional<TaskDTO> actualizarTarea(Long id, TaskDTO taskDTO) {
         return taskRepository.findById(id)                      // 1. Buscar la tarea existente
-                .map(existing -> {                              // 2. Si existe...
-                    existing.setTitle(taskDTO.getTitle());      //    actualizar título
-                    existing.setCompleted(taskDTO.isCompleted());//    actualizar completada
-                    Task saved = taskRepository.save(existing); // 3. Guardar cambios
+                .map(existente -> {                             // 2. Si existe...
+                    existente.setTitulo(taskDTO.getTitulo());   //    actualizar título
+                    existente.setCompletado(taskDTO.isCompletado());//    actualizar completada
+                    Task saved = taskRepository.save(existente); // 3. Guardar cambios
                     return toDTO(saved);                        // 4. Convertir a DTO y devolver
                 });
     }
-
 
     public boolean eliminarTarea(Long id) {
         if (taskRepository.existsById(id)) {    // 1. Verificar que existe
@@ -60,22 +59,20 @@ public class TaskService {
 
     // ================ METODOS CONVERSORES =========================================
 
-    //Entidad → DTO siempre que voy a devolver algo al cliente.
     private TaskDTO toDTO(Task task) {
         TaskDTO dto = new TaskDTO();
         dto.setId(task.getId());
-        dto.setTitle(task.getTitle());
-        dto.setCompleted(task.isCompleted());
-        dto.setCreatedAt(task.getCreatedAt());
+        dto.setTitulo(task.getTitulo());
+        dto.setCompletado(task.isCompletado());
+        dto.setFechaCreacion(task.getFechaCreacion());
         return dto;
     }
 
-    //DTO → Entidad solo cuando creo algo nuevo (POST).
     private Task toEntity(TaskDTO taskDTO) {
         Task task = new Task();
-        task.setTitle(taskDTO.getTitle());
-        task.setCompleted(taskDTO.isCompleted());
-        // id y createdAt se dejan sin asignar: la base de datos y @PrePersist los rellenan
+        task.setTitulo(taskDTO.getTitulo());
+        task.setCompletado(taskDTO.isCompletado());
+        // id y fechaCreacion se dejan sin asignar: la base de datos y @PrePersist los rellenan
         return task;
     }
 }
