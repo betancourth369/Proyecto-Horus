@@ -37,5 +37,6 @@ logs/
 # Siguen funcionando igual: OpenCode los carga desde el disco.
 AGENTS.md
 MEMORY.md
+MEJORAS_PENDIENTES.md
 .opencode/
 
