@@ -31,6 +31,15 @@ Estilo de comunicación sobre HTTP basado en recursos y métodos (`GET`, `POST`,
 Conjuntos de configuración asociados a un entorno (desarrollo, producción).
 Permiten variar valores sin cambiar el código.
 
+## Manejo global de excepciones
+
+Mecanismo de Spring para capturar excepciones lanzadas en los controladores y
+convertirlas en respuestas HTTP con código de estado adecuado. Se implementa con
+la anotación `@RestControllerAdvice` y métodos anotados con
+`@ExceptionHandler`. Ejemplo: `MethodArgumentNotValidException` devuelve
+`400 Bad Request`, `ResourceNotFoundException` devuelve `404 Not Found`,
+`DuplicateResourceException` devuelve `409 Conflict`, etc.
+
 ## Pendiente
 
 - Añadir conceptos nuevos a medida que se aprenden.

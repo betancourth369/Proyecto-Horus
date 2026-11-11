@@ -68,6 +68,7 @@ Project Horus/
 | [Visión y alcance](./docs/01-vision.md) | Visión del proyecto, alcance y evolución |
 | [Stack tecnológico](./docs/02-stack-tecnologico.md) | Tecnologías actuales y previstas |
 | [Arquitectura](./docs/03-arquitectura.md) | Arquitectura de capas y flujo de datos |
+| [Conceptos aprendidos](./docs/06-conceptos.md) | Glosario y conceptos técnicos |
 | [Entorno de desarrollo](./docs/04-entorno-desarrollo.md) | Cómo arrancar y configurar el proyecto |
 | [Base de datos](./docs/05-base-de-datos.md) | Esquema y persistencia |
 | [Conceptos aprendidos](./docs/06-conceptos.md) | Glosario y conceptos técnicos |
