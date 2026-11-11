@@ -1,11 +1,8 @@
-<div align="center">
-
 # 🏠 Horus
 
 **Asistente inteligente para el hogar**
 
-> Sistema central que coordina distintas inteligencias artificiales y permite,
-> de forma progresiva, interactuar con el hogar.
+> Sistema central que coordina distintas inteligencias artificiales y permite, de forma progresiva, interactuar con el hogar.
 
 <br>
 
@@ -17,21 +14,18 @@
 ![Estado](https://img.shields.io/badge/estado-en%20desarrollo-ffb000?style=flat-square)
 ![Licencia](https://img.shields.io/badge/licencia-MIT-green?style=flat-square)
 
-</div>
-
 ---
 
 ## 📍 Estado
 
-> **En desarrollo activo.** El backend está operativo con la primera funcionalidad
-> completa (gestión de tareas). Angular, Docker, servicios de IA y domótica
-> están **previstos, no implementados**.
+> **En desarrollo activo.** El backend está operativo con dos funcionalidades completas: gestión de tareas y lista de la compra. Angular, Docker, servicios de IA y domótica están **previstos, no implementados**.
 
 | Componente | Estado |
 |---|---|
 | Backend Spring Boot + JPA + PostgreSQL | ✅ Arranca, conecta y sirve en `:8080` |
 | Capas `controller` · `entity` · `repository` · `service` · `dto` · `exception` | ✅ Implementadas |
 | Endpoints REST (`/api/tasks`) | ✅ CRUD completo: `GET`, `POST`, `GET/{id}`, `PUT/{id}`, `DELETE/{id}` |
+| Endpoints REST (`/api/shopping-items`) | ✅ CRUD completo: `GET`, `POST`, `GET/{id}`, `PUT/{id}`, `DELETE/{id}` |
 | Validación de entrada con `@Valid` y `@NotBlank` | ✅ Implementada (`400 Bad Request` con detalle) |
 | Manejo global de excepciones (`GlobalExceptionHandler`) | ✅ Implementado |
 | Tests | ⏳ Solo el test de contexto |
@@ -71,15 +65,18 @@ Project Horus/
 
 | | |
 |---|---|
-| [Visión y alcance](docs/01-vision.md) | [Stack tecnológico](docs/02-stack-tecnologico.md) |
-| [Arquitectura](docs/03-arquitectura.md) | [Entorno de desarrollo](docs/04-entorno-desarrollo.md) |
-| [Base de datos](docs/05-base-de-datos.md) | [Conceptos técnicos](docs/06-conceptos.md) |
-| [Registro de decisiones](docs/decisiones/) | [Índice completo](docs/README.md) |
+| [Visión y alcance](./docs/01-vision.md) | Visión del proyecto, alcance y evolución |
+| [Stack tecnológico](./docs/02-stack-tecnologico.md) | Tecnologías actuales y previstas |
+| [Arquitectura](./docs/03-arquitectura.md) | Arquitectura de capas y flujo de datos |
+| [Entorno de desarrollo](./docs/04-entorno-desarrollo.md) | Cómo arrancar y configurar el proyecto |
+| [Base de datos](./docs/05-base-de-datos.md) | Esquema y persistencia |
+| [Conceptos aprendidos](./docs/06-conceptos.md) | Glosario y conceptos técnicos |
+| [Registro de decisiones](./docs/decisiones/) | Registro de decisiones técnicas |
+| [Índice completo](./docs/README.md) | Índice de toda la documentación |
 
-`docs/` alimenta además un cuaderno de **NotebookLM** que sirve de guía de
-aprendizaje del proyecto.
+`docs/` alimenta además un cuaderno de **NotebookLM** que sirve de guía de referencia y aprendizaje del proyecto.
 
-> Para poner el proyecto en marcha → [Entorno de desarrollo](docs/04-entorno-desarrollo.md).
+> Para poner el proyecto en marcha → [Entorno de desarrollo](./docs/04-entorno-desarrollo.md).
 
 ## 🗺️ Hoja de ruta
 
@@ -87,7 +84,7 @@ aprendizaje del proyecto.
 - [x] Credenciales fuera del código
 - [x] Primera funcionalidad completa: *entidad → repositorio → servicio → controlador* (tareas)
 - [x] Validación de entrada con DTO y `GlobalExceptionHandler`
-- [ ] Segunda funcionalidad: lista de la compra (`ShoppingItem`)
+- [x] Segunda funcionalidad: lista de la compra (`ShoppingItem`)
 - [ ] Tests unitarios y de integración
 - [ ] Consulta de clima mediante API externa
 - [ ] Frontend Angular
@@ -97,5 +94,4 @@ aprendizaje del proyecto.
 
 ## 📄 Licencia
 
-[MIT](LICENSE) — puedes usar, copiar, modificar y distribuir este proyecto
-indicando la autoría.
+[MIT](LICENSE) — puedes usar, copiar, modificar y distribuir este proyecto indicando la autoría.

@@ -5,8 +5,8 @@
 - Un único módulo: `back_horus/`.
 - Una clase principal: `BackHorusApplication`.
 - Primera funcionalidad implementada: gestión de tareas (`Task`).
-- Paquetes por capas poblados: `controller`, `entity`, `repository`, `service`,
-  más `dto` para el contrato de la API.
+- Segunda funcionalidad implementada: gestión de lista de la compra (`ShoppingItem`).
+- Paquetes por capas poblados: `controller`, `entity`, `repository`, `service`, `dto`, `exception`.
 
 ### Estructura de carpetas (actual)
 
@@ -17,15 +17,20 @@ back_horus/
         └── java/com/project/back_horus/
             ├── BackHorusApplication.java
             ├── controller/
-            │   └── TaskController.java
+            │   ├── TaskController.java
+            │   └── ShoppingItemController.java
             ├── dto/
-            │   └── TaskDTO.java
+            │   ├── TaskDTO.java
+            │   └── ShoppingItemDTO.java
             ├── entity/
-            │   └── Task.java
+            │   ├── Task.java
+            │   └── ShoppingItem.java
             ├── repository/
-            │   └── TaskRepository.java
-            └── service/
-                └── TaskService.java
+            │   ├── TaskRepository.java
+            │   └── ShoppingItemRepository.java
+            ├── service/
+            │   ├── TaskService.java
+            │   └── ShoppingItemService.java
             └── exception/
                 └── GlobalExceptionHandler.java
     └── test/
@@ -38,10 +43,15 @@ back_horus/
 | Capa | Clase | Responsabilidad |
 |---|---|---|
 | Controller | `TaskController` | Recibe HTTP, devuelve JSON con códigos de estado |
+| Controller | `ShoppingItemController` | Recibe HTTP, devuelve JSON con códigos de estado |
 | Service | `TaskService` | Lógica de negocio y conversión DTO ↔ Entidad |
+| Service | `ShoppingItemService` | Lógica de negocio y conversión DTO ↔ Entidad |
 | Repository | `TaskRepository` | Lectura y escritura en PostgreSQL (`JpaRepository`) |
+| Repository | `ShoppingItemRepository` | Lectura y escritura en PostgreSQL (`JpaRepository`) |
 | Entity | `Task` | Tabla `tasks` en la base de datos |
+| Entity | `ShoppingItem` | Tabla `shopping_items` en la base de datos |
 | DTO | `TaskDTO` | Contrato de la API: qué entra y qué sale |
+| DTO | `ShoppingItemDTO` | Contrato de la API: qué entra y qué sale |
 | Excepciones | `GlobalExceptionHandler` | Captura errores de validación y devuelve 400 con detalle |
 
 ### Flujo verificado
@@ -51,7 +61,14 @@ POST /api/tasks → Controller → Service → Repository → PostgreSQL → Ser
 GET  /api/tasks/{id} → Controller → Service → Repository → PostgreSQL → Service → Controller → JSON
 PUT  /api/tasks/{id} → Controller → Service → Repository → PostgreSQL → Service → Controller → JSON
 DELETE /api/tasks/{id} → Controller → Service → Repository → PostgreSQL → Service → Controller → JSON
+
+POST /api/shopping-items → Controller → Service → Repository → PostgreSQL → Service → Controller → JSON
+GET  /api/shopping-items/{id} → Controller → Service → Repository → PostgreSQL → Service → Controller → JSON
+PUT  /api/shopping-items/{id} → Controller → Service → Repository → PostgreSQL → Service → Controller → JSON
+DELETE /api/shopping-items/{id} → Controller → Service → Repository → PostgreSQL → Service → Controller → JSON
+
 POST /api/tasks (DTO inválido) → Controller → GlobalExceptionHandler → 400 + detalle del error
+POST /api/shopping-items (DTO inválido) → Controller → GlobalExceptionHandler → 400 + detalle del error
 ```
 
 ## Arquitectura prevista (no implementada)
@@ -63,11 +80,10 @@ POST /api/tasks (DTO inválido) → Controller → GlobalExceptionHandler → 40
 
 ## Pendiente
 
-- Empezar la entidad de la lista de la compra (`ShoppingItem`).
+- Elegir fuente de datos del clima (gratuita y sin clave).
 - Definir módulos adicionales del monolito cuando surjan nuevas funcionalidades.
 
 ## Estado
 
-- Documento de arquitectura actualizado con CRUD completo de tareas y validación
-  de entrada con `@Valid` y `GlobalExceptionHandler`.
-- Última actualización: 2026-11-03.
+- Documento de arquitectura actualizado con CRUD completo de tareas y lista de la compra.
+- Última actualización: 2026-11-11.
