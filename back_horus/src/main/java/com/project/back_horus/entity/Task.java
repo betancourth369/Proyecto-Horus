@@ -14,14 +14,14 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String title;
-    private boolean completed;
-    private Instant createdAt;//tipo de fecha UTC
+    private String titulo;
+    private boolean completado;
+    private Instant fechaCreacion;//tipo de fecha UTC
 
     @PrePersist
     void fillCreatedAt(){ //aqui le doy el valor mediante este IF ya que si es NULL
-        if (createdAt == null){
-            createdAt = Instant.now();
+        if (fechaCreacion == null){
+            fechaCreacion = Instant.now();
         }
     }
 

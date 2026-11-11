@@ -2,6 +2,7 @@ package com.project.back_horus.service;
 
 import com.project.back_horus.dto.TaskDTO;
 import com.project.back_horus.entity.Task;
+import com.project.back_horus.exception.ResourceNotFoundException;
 import com.project.back_horus.repository.TaskRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -33,28 +34,33 @@ public class TaskService {
                 .collect(Collectors.toList());     // 3. Recolectar en lista y devolver
     }
 
-    public Optional<TaskDTO> obtenerTareaPorId(Long id) {
-        return taskRepository.findById(id)   // 1. Buscar entidad por id en la BD
-                .map(this::toDTO);           // 2. Si existe, convertir a DTO
+    public TaskDTO obtenerTareaPorId(Long id) {
+        return taskRepository.findById(id)                      // 1. Buscar entidad por id en la BD
+                .map(this::toDTO)                               // 2. Si existe, convertir a DTO
+                .orElseThrow(() -> new ResourceNotFoundException( // 3. Si no existe, lanzar excepción
+                        "No se encontró la tarea con id " + id));
     }
 
-    public Optional<TaskDTO> actualizarTarea(Long id, TaskDTO taskDTO) {
+    public TaskDTO actualizarTarea(Long id, TaskDTO taskDTO) {
         return taskRepository.findById(id)                      // 1. Buscar la tarea existente
                 .map(existente -> {                             // 2. Si existe...
                     existente.setTitulo(taskDTO.getTitulo());   //    actualizar título
                     existente.setCompletado(taskDTO.isCompletado());//    actualizar completada
                     Task saved = taskRepository.save(existente); // 3. Guardar cambios
                     return toDTO(saved);                        // 4. Convertir a DTO y devolver
-                });
+                })
+                .orElseThrow(() -> new ResourceNotFoundException( // 5. Si no existe, lanzar excepción
+                        "No se encontró la tarea con id " + id));
     }
 
     public boolean eliminarTarea(Long id) {
-        if (taskRepository.existsById(id)) {    // 1. Verificar que existe
-            taskRepository.deleteById(id);      // 2. Borrar de la base de datos
-            return true;                        // 3. Devolver true
+        if (!taskRepository.existsById(id)) {    // 1. Verificar si no existe
+            throw new ResourceNotFoundException("No se encontró la tarea con id " + id); // 2. Si no existe, lanzar excepción
         }
-        return false;                           // 4. Devolver false si no existía
+        taskRepository.deleteById(id);      // 3.Si existe  borrar de la base de datos
+        return true;                        // 4. Devolver true
     }
+
     //*******************************************************************************
 
     // ================ METODOS CONVERSORES =========================================

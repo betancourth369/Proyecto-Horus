@@ -2,6 +2,7 @@ package com.project.back_horus.service;
 
 import com.project.back_horus.dto.ShoppingItemDTO;
 import com.project.back_horus.entity.ShoppingItem;
+import com.project.back_horus.exception.ResourceNotFoundException;
 import com.project.back_horus.repository.ShoppingItemRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,27 +31,33 @@ public class ShoppingItemService {
                 .collect(Collectors.toList());
     }
 
-    public Optional<ShoppingItemDTO> obtenerArticuloPorId(Long id){
+    public ShoppingItemDTO obtenerArticuloPorId(Long id){
         return shoppingItemRepository.findById(id)
-                .map(this::toDto);
+                .map(this::toDto)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "No se encontró el artículo con id " + id));
     }
 
-    public Optional<ShoppingItemDTO> actualizarArticulo(Long id, ShoppingItemDTO shoppingItemDTO){
+    public ShoppingItemDTO actualizarArticulo(Long id, ShoppingItemDTO shoppingItemDTO){
         return shoppingItemRepository.findById(id)
-                .map(existente ->{
+                .map(existente -> {
                     existente.setNombre(shoppingItemDTO.getNombre());
+                    existente.setCantidad(shoppingItemDTO.getCantidad());
+                    existente.setUnidad(shoppingItemDTO.getUnidad());
                     existente.setComprado(shoppingItemDTO.isComprado());
                     ShoppingItem saved = shoppingItemRepository.save(existente);
                     return toDto(saved);
-                });
+                })
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "No se encontró el artículo con id " + id));
     }
 
     public boolean eliminarArticulo(Long id) {
-        if (shoppingItemRepository.existsById(id)) {
-            shoppingItemRepository.deleteById(id);
-            return true;
+        if (!shoppingItemRepository.existsById(id)) {
+            throw new ResourceNotFoundException("No se encontró el artículo con id " + id);
         }
-        return false;
+        shoppingItemRepository.deleteById(id);
+        return true;
     }
 
     // ================ METODOS CONVERSORES =========================================

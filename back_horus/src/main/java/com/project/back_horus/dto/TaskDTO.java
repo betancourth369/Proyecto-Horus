@@ -9,10 +9,10 @@ public class TaskDTO {
 
     private Long id;
 
-    @NotBlank(message = "El titulo no puede estar vacio")
-    private String title;
+    @NotBlank(message = "Titulo vacio mi so, llenelo o paila!!")
+    private String titulo;
 
-    private boolean completed;
+    private boolean completado;
 
-    private Instant createdAt;
+    private Instant fechaCreacion;
 }

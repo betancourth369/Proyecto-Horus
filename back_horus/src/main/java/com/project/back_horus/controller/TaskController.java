@@ -18,7 +18,7 @@ public class TaskController {
 
 
     @PostMapping
-    public ResponseEntity<TaskDTO> crearTarea(@RequestBody @Valid TaskDTO taskDTO) {
+    public ResponseEntity<TaskDTO> crearTarea(@Valid @RequestBody TaskDTO taskDTO) {
         return ResponseEntity.status(201).body(taskService.crearTarea(taskDTO));
     }
 
@@ -31,20 +31,18 @@ public class TaskController {
 
     @GetMapping("/{id}")
     public ResponseEntity<TaskDTO> obtenerTareaPorId(@PathVariable Long id) {
-        return taskService.obtenerTareaPorId(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        // El service ya lanza ResourceNotFoundException si no existe,
+        // por lo que aquí simplemente envolvemos el resultado en 200 OK.
+        return ResponseEntity.ok(taskService.obtenerTareaPorId(id));
     }
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<TaskDTO> actualizarTarea(
-            @PathVariable Long id,
-            @RequestBody @Valid TaskDTO taskDTO) {
+    public ResponseEntity<TaskDTO> actualizarTarea(@PathVariable Long id, @Valid @RequestBody TaskDTO taskDTO) {
 
-        return taskService.actualizarTarea(id, taskDTO)
-                .map(ResponseEntity::ok)           // si existe -> 200 + DTO actualizado
-                .orElse(ResponseEntity.notFound().build()); // si no -> 404
+        // El service ya lanza ResourceNotFoundException si no existe,
+        // por lo que simplemente envolvemos el resultado actualizado en 200 OK.
+        return ResponseEntity.ok(taskService.actualizarTarea(id, taskDTO));
     }
 
 

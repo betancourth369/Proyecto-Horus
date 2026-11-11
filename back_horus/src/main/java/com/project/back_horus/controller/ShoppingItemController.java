@@ -37,9 +37,7 @@ public class ShoppingItemController {
     // ================================================================
     @GetMapping("/{id}")
     public ResponseEntity<ShoppingItemDTO> obtenerArticuloPorId(@PathVariable Long id) {
-        return shoppingItemService.obtenerArticuloPorId(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok(shoppingItemService.obtenerArticuloPorId(id));
     }
 
     // ================================================================
@@ -50,9 +48,7 @@ public class ShoppingItemController {
             @PathVariable Long id,
             @RequestBody @Valid ShoppingItemDTO shoppingItemDTO) {
 
-        return shoppingItemService.actualizarArticulo(id, shoppingItemDTO)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok(shoppingItemService.actualizarArticulo(id, shoppingItemDTO));
     }
 
     // ================================================================
