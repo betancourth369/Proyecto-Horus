@@ -18,7 +18,7 @@
 
 ## 📍 Estado
 
-> **En desarrollo activo.** El backend está operativo con dos funcionalidades completas: gestión de tareas y lista de la compra. Angular, Docker, servicios de IA y domótica están **previstos, no implementados**.
+> **En desarrollo activo.** El backend está operativo con tres funcionalidades: gestión de tareas, lista de la compra y consulta de clima. Angular, Docker, servicios de IA y domótica están **previstos, no implementados**.
 
 | Componente | Estado |
 |---|---|
@@ -26,6 +26,7 @@
 | Capas `controller` · `entity` · `repository` · `service` · `dto` · `exception` | ✅ Implementadas |
 | Endpoints REST (`/api/tasks`) | ✅ CRUD completo: `GET`, `POST`, `GET/{id}`, `PUT/{id}`, `DELETE/{id}` |
 | Endpoints REST (`/api/shopping-items`) | ✅ CRUD completo: `GET`, `POST`, `GET/{id}`, `PUT/{id}`, `DELETE/{id}` |
+| Endpoints REST (`/api/clima`) | ✅ `GET` con consulta externa a WeatherAPI |
 | Validación de entrada con `@Valid` y `@NotBlank` | ✅ Implementada (`400 Bad Request` con detalle) |
 | Manejo global de excepciones (`GlobalExceptionHandler`) | ✅ Implementado |
 | Tests | ⏳ Solo el test de contexto |
@@ -43,6 +44,7 @@
 | Servidor | Tomcat 11.0.24 *(embebido)* |
 | Base de datos | PostgreSQL 18.6 *(local)* |
 | Validación | Jakarta Bean Validation (`spring-boot-starter-validation`) |
+| Consulta externa | WeatherAPI (`back_horus/src/main/java/com/project/back_horus/service/ClimaService.java`) |
 | IDE | IntelliJ IDEA |
 
 ## 📁 Estructura
@@ -51,11 +53,27 @@
 Project Horus/
 ├── back_horus/   Backend · Java + Spring Boot + PostgreSQL
 │   ├── controller/   Controladores REST (@RestController)
+│   │   ├── TaskController.java
+│   │   ├── ShoppingItemController.java
+│   │   └── ClimaController.java
 │   ├── dto/          Objetos de transferencia de datos (@Data)
+│   │   ├── TaskDTO.java
+│   │   ├── ShoppingItemDTO.java
+│   │   └── ClimaDTO.java
 │   ├── entity/       Entidades JPA (@Entity)
+│   │   ├── Task.java
+│   │   ├── ShoppingItem.java
+│   │   └── ClimaDTO.java (usado como DTO, no entidad)
 │   ├── repository/   Repositorios Spring Data JPA
+│   │   ├── TaskRepository.java
+│   │   ├── ShoppingItemRepository.java
+│   │   └── (Clima: consulta a API externa, sin repositorio)
 │   ├── service/      Lógica de negocio y conversión DTO ↔ Entity
+│   │   ├── TaskService.java
+│   │   ├── ShoppingItemService.java
+│   │   └── ClimaService.java
 │   ├── exception/    Manejo global de excepciones (@RestControllerAdvice)
+│   │   └── GlobalExceptionHandler.java
 │   └── ...
 ├── docs/         Documentación técnica (libro del proyecto)
 └── README.md
@@ -68,7 +86,6 @@ Project Horus/
 | [Visión y alcance](./docs/01-vision.md) | Visión del proyecto, alcance y evolución |
 | [Stack tecnológico](./docs/02-stack-tecnologico.md) | Tecnologías actuales y previstas |
 | [Arquitectura](./docs/03-arquitectura.md) | Arquitectura de capas y flujo de datos |
-| [Conceptos aprendidos](./docs/06-conceptos.md) | Glosario y conceptos técnicos |
 | [Entorno de desarrollo](./docs/04-entorno-desarrollo.md) | Cómo arrancar y configurar el proyecto |
 | [Base de datos](./docs/05-base-de-datos.md) | Esquema y persistencia |
 | [Conceptos aprendidos](./docs/06-conceptos.md) | Glosario y conceptos técnicos |
@@ -86,8 +103,8 @@ Project Horus/
 - [x] Primera funcionalidad completa: *entidad → repositorio → servicio → controlador* (tareas)
 - [x] Validación de entrada con DTO y `GlobalExceptionHandler`
 - [x] Segunda funcionalidad: lista de la compra (`ShoppingItem`)
+- [x] Tercera funcionalidad: consulta de clima mediante API externa (`/api/clima`)
 - [ ] Tests unitarios y de integración
-- [ ] Consulta de clima mediante API externa
 - [ ] Frontend Angular
 - [ ] Docker Compose
 - [ ] Coordinación de servicios de IA
