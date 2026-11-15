@@ -1,0 +1,32 @@
+.estado-vacio {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.estado-vacio .icono {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.estado-vacio h3 {
+  margin: 0 0 12px 0;
+  color: #e6e0d2;
+}
+
+.sin-tareas p {
+  color: #b3a692;
+}
+
+.btn-primario {
+  background: linear-gradient(to right, #FFC35C, #FF9F43);
+  color: #1a1208;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 9999px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-primario:hover {
+  box-shadow: 0 6px 16px rgba(255, 176, 92, 0.5);
+}

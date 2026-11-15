@@ -20,9 +20,7 @@ public class ShoppingItemService {
     private final ShoppingItemRepository shoppingItemRepository;
     private final TaskRepository taskRepository;
 
-    // ========= METODOS ==============================================
-
-    public ShoppingItemDTO crearArticulo(ShoppingItemDTO shoppingItemDTO){
+    public ShoppingItemDTO crearArticulo(ShoppingItemDTO shoppingItemDTO) {
         ShoppingItem shoppingItem = toEntity(shoppingItemDTO);
         ShoppingItem saved = shoppingItemRepository.save(shoppingItem);
         return toDto(saved);
@@ -40,7 +38,7 @@ public class ShoppingItemService {
                 .orElseThrow(() -> new ResourceNotFoundException("No se encontró el artículo con id " + id));
     }
 
-    public ShoppingItemDTO actualizarArticulo(Long id, ShoppingItemDTO shoppingItemDTO){
+    public ShoppingItemDTO actualizarArticulo(Long id, ShoppingItemDTO shoppingItemDTO) {
         return shoppingItemRepository.findById(id)
                 .map(existente -> {
                     existente.setNombre(shoppingItemDTO.getNombre());
@@ -50,8 +48,7 @@ public class ShoppingItemService {
                     ShoppingItem saved = shoppingItemRepository.save(existente);
                     return toDto(saved);
                 })
-                .orElseThrow(() -> new ResourceNotFoundException(
-                        "No se encontró el artículo con id " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("No se encontró el artículo con id " + id));
     }
 
     public boolean eliminarArticulo(Long id) {
@@ -61,10 +58,6 @@ public class ShoppingItemService {
         }
         return false;
     }
-
-    // ================================================================
-    // NUEVO: OPERACIONES CON TAREA
-    // ================================================================
 
     public ShoppingItemDTO agregarArticuloATarea(Long taskId, ShoppingItemDTO shoppingItemDTO){
         Task task = taskRepository.findById(taskId)
@@ -115,8 +108,6 @@ public class ShoppingItemService {
         shoppingItemRepository.deleteById(itemId);
         return true;
     }
-
-    // ================ METODOS CONVERSORES =========================================
 
     private ShoppingItemDTO toDto(ShoppingItem item) {
         ShoppingItemDTO dto = new ShoppingItemDTO();

@@ -1,0 +1,72 @@
+<div class="contenedor-proyecto">
+  <div class="cabecera">
+    <h1>Tareas</h1>
+    <div class="acciones-cabecera">
+      <button class="btn-nueva" (click)="nuevaTarea()">
+        <span>+ Nueva tarea</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="filtros">
+    <button class="filtro" [class.activo]="filtroActual === 'todos'" (click)="filtrar('todos')">
+      Todas <span>{{ filtros.todas }}</span>
+    </button>
+    <button class="filtro" [class.activo]="filtroActual === 'pendientes'" (click)="filtrar('pendientes')">
+      Pendientes <span>{{ filtros.pendientes }}</span>
+    </button>
+    <button class="filtro" [class.activo]="filtroActual === 'completadas'" (click)="filtrar('completadas')">
+      Completadas <span>{{ filtros.completadas }}</span>
+    </button>
+  </div>
+
+  <div class="tarjetas-grid">
+    <div
+      *ngFor="let tarea of tareasFiltradas"
+      class="tarjeta-tarea"
+      [class.completada]="tarea.completado"
+    >
+      <div class="info-tarjeta">
+        <div class="informacion-tarea">
+          <span class="chip-estado" [class]="tarea.completado ? 'completada' : 'pendiente'">
+            {{ tarea.completado ? 'Completada' : 'Pendiente' }}
+          </span>
+          <h3>{{ tarea.titulo }}</h3>
+          <span class="fecha">{{ tarea.fechaCreacion | date:'dd/MM/yyyy' }}</span>
+        </div>
+
+        <div class="tarjeta-items">
+          <div class="items-lista" *ngIf="tarea.items?.length > 0; else sinArticulos">
+            <span class="chip-articulo" *ngFor="let item of tarea.items">
+              {{ item.nombre }} ({{ item.cantidad }})
+            </span>
+          </div>
+          <div *ngIf="!tarea.items || tarea.items.length === 0" class="sin-articulos">
+            Sin artículos
+          </div>
+        </div>
+
+        <div class="barra-progreso">
+          <div class="barra-progreso-relleno" [style.width.porcentaje]="progreso(tarea)"></div>
+          <span class="texto-progreso">{{ porcentajeCompletado(tarea) }}%</span>
+        </div>
+      </div>
+
+      <div class="acciones-tarjeta">
+        <button class="btn-check" (click)="cambiarEstado(tarea)" [class.completada]="tarea.completado">
+          {{ tarea.completado ? 'Desmarcar' : 'Completar' }}
+        </button>
+        <button class="btn-eliminar" (click)="eliminarTarea(tarea.id!)">Eliminar</button>
+      </div>
+    </div>
+
+    <div *ngIf="!tareasFiltradas.length" class="sin-tareas">
+      <div class="sin-tareas-contenido">
+        <div class="icono">📭</div>
+        <h3>No hay tareas</h3>
+        <p>No hay tareas que mostrar.</p>
+        <button class="btn-principal" (click)="nuevaTarea()">Crear primera tarea</button>
+      </div>
+    </div>
+  </div>
+</div>

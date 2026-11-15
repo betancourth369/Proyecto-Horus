@@ -1,0 +1,30 @@
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.chip.pendiente {
+  background-color: #FFCB7A;
+  color: #8A5300;
+}
+
+.chip.en-curso {
+  background-color: #8CC2FF;
+  color: #0B5DB8;
+}
+
+.chip.completada {
+  background-color: #7BE3AC;
+  color: #12713F;
+}
+
+.chip.vencida {
+  background-color: #FF9C90;
+  color: #B3382B;
+}
